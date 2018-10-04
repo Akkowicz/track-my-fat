@@ -1,2 +1,2 @@
-# track-my-fat-
+# track-my-fat
 A simple calorie counter.
