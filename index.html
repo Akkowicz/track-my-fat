@@ -5,11 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>TrackMyFat | Meal & Calorie Tracker</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body>
-    
+    <!-- Navbar -->
+    <nav>
+        <div class="nav-wrapper teal">
+            <div class="container">
+                <a href="#" class="a brand-logo center">TrackMyFat</a>
+                <ul class="right">
+                    <li><a href="#" class="clear-btn waves-effect waves-light btn teal accent-4">Clear All</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br>
+    <div class="container">
+        <!-- Form -->
+        <div class="card">
+        <div class="card-content">
+            <span class="card-title">Add Meal / Food Item</span>
+            <form action="" class="col">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input type="text" id="item-name" placeholder="Add Item">
+                        <label for="item-name">Meal</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input type="text" id="item-calories" placeholder="Add Calories">
+                        <label for="item-name">Calories</label>
+                    </div>
+                    <a class="add-btn btn btn waves-effect waves-light">add meal</a>
+                    <!-- <a class="update-btn btn btn waves-effect waves-light orange">update meall</a> -->
+                    <!-- <a class="delete-btn btn btn waves-effect waves-light red">remove meal</a> -->
+                    <a class="back-btn btn btn waves-effect waves-light grey right">back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Calorie Count -->
+    <h3 class="center-align">Total Calories: <span class="total-calories">0</span></h3>
+
+    <!-- Meal list -->
+    <ul id="item-list" class="collection">
+        <!-- <li class="collection-item" id="item-0">
+            <strong>Falafel: </strong><em>250 Calories</em>
+            <a href="#" class="secondary-content"><i class="material-icons">create</i></a>
+        </li>
+        <li class="collection-item" id="item-0">
+            <strong>Hummus: </strong><em>120 Calories</em>
+            <a href="#" class="secondary-content"><i class="material-icons">create</i></a>
+        </li>
+        <li class="collection-item" id="item-0">
+            <strong>Soy Ham: </strong><em>150 Calories</em>
+            <a href="#" class="secondary-content"><i class="material-icons">create</i></a>
+        </li> -->
+    </ul>
+</div>
 </body>
 </html>
