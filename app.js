@@ -26,6 +26,14 @@ const ItemCtrl = (function() {
         getItems: function() {
             return state.items;
         },
+        // return totalcalories value
+        getTotalCalories: function() {
+            return state.totalCalories;
+        },
+        // add new calories to the total count
+        addCalories: function(newCalories) {
+            state.totalCalories += newCalories;
+        },
         // add new entry to state.items array
         addItem: function(name, calories) {
             calories = parseInt(calories);
@@ -46,7 +54,8 @@ const UICtrl = (function() {
         itemList: document.querySelector('#item-list'),
         addBtn: document.querySelector('.add-btn'),
         itemNameInput: document.querySelector('#item-name'),
-        itemCaloriesInput: document.querySelector('#item-calories')
+        itemCaloriesInput: document.querySelector('#item-calories'),
+        totalCaloriesDisplay: document.querySelector('.total-calories')
     }
     
     // Expose functions
@@ -75,11 +84,33 @@ const UICtrl = (function() {
         },
         // Add item to the UI
         addListItem: function(item) {
-            UISelectors.itemList.innerHTML += `
-        <li class="collection-item" id="item-${item.id}">
+            UICtrl.showList();
+            ItemCtrl.addCalories(item.calories);
+            UICtrl.refreshTotalCalories();
+            const li = document.createElement('li');
+            li.className = 'collection-item';
+            li.id = `item-${item.id}`;
+            li.innerHTML += `
             <strong>${item.name}: </strong><em>${item.calories} Calories</em>
-            <a href="#" class="secondary-content"><i class="edit-item material-icons">create</i></a>
-        </li>`;
+            <a href="#" class="secondary-content"><i class="edit-item material-icons">create</i></a>`;
+            UISelectors.itemList.insertAdjacentElement('beforeend', li);
+        },
+        // Clear all inputs
+        clearInput: function() {
+            UISelectors.itemNameInput.value = '';
+            UISelectors.itemCaloriesInput.value = '';
+        },
+        // Hides the ul element
+        hideList: function() {
+            UISelectors.itemList.style.display = 'none';
+        },
+        // Show the ul element
+        showList: function() {
+            UISelectors.itemList.style.display = 'block';
+        },
+        // Refresh the UI based on the current state
+        refreshTotalCalories() {
+            UISelectors.totalCaloriesDisplay.textContent = ItemCtrl.getTotalCalories();
         },
         // Make selectors public
         getSelectors: function() {
@@ -102,6 +133,8 @@ const AppCtrl = (function() {
         if (input.name !== '' && input.calories !== '') {
             const newItem = ItemCtrl.addItem(input.name, input.calories);
             UICtrl.addListItem(newItem);
+            // Clear input
+            UICtrl.clearInput();
         }
         e.preventDefault();
     };
@@ -109,7 +142,14 @@ const AppCtrl = (function() {
     return {
         init: function() {
             const items = ItemCtrl.getItems();
-            UICtrl.populateItemList(items);
+            // Check if items array is empty
+            if (items.length === 0) {
+                UICtrl.hideList();
+            } else {
+                UICtrl.showList();
+                UICtrl.populateItemList(items);
+                UICtrl.refreshTotalCalories();
+            }
 
             loadEventListeners();
         },
