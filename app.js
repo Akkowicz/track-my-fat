@@ -253,6 +253,7 @@ const AppCtrl = (function() {
         ItemCtrl.purgeItems();
 
         UICtrl.redrawState();
+        UICtrl.hideList();
         e.preventDefault();
     }
     // Expose init function
