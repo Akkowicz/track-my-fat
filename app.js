@@ -1,6 +1,18 @@
 // Storage controller
 const StorageCtrl = (function() {
-    console.log('Storage Ctrl');
+
+    // public
+    return {
+        storeState: function() {
+            const state = ItemCtrl.getState();
+            localStorage.setItem('state', JSON.stringify(state));
+        },
+
+        retrieveState: function() {
+            const storedState = JSON.parse(localStorage.getItem('state'));
+            ItemCtrl.setState(storedState);
+        }
+    }
 })();
 
 // Item controller
@@ -19,8 +31,11 @@ const ItemCtrl = (function() {
     // Public
     return {
         // return whole state object
-        logState: function() {
+        getState: function() {
             return state;
+        },
+        setState: function(newState) {
+            [state.items, state.currentItem, state.totalCalories] = [newState.items, newState.currentItem, newState.totalCalories];
         },
         // return currentItem
         getCurrentItem: function() {
@@ -218,6 +233,7 @@ const AppCtrl = (function() {
             UICtrl.addListItem(newItem);
             // Clear input
             UICtrl.clearInput();
+            StorageCtrl.storeState();
         }
         e.preventDefault();
     };
@@ -238,6 +254,8 @@ const AppCtrl = (function() {
         ItemCtrl.clearCurrentItem();
 
         UICtrl.redrawState();
+
+        StorageCtrl.storeState();
         e.preventDefault();
     }
     // Fires when the delete button is clicked
@@ -246,6 +264,8 @@ const AppCtrl = (function() {
         ItemCtrl.clearCurrentItem();
 
         UICtrl.redrawState();
+
+        StorageCtrl.storeState();
         e.preventDefault();
     };
     // Fires when the clear all button is clicked
@@ -254,12 +274,15 @@ const AppCtrl = (function() {
 
         UICtrl.redrawState();
         UICtrl.hideList();
+
+        StorageCtrl.storeState();
         e.preventDefault();
     }
     // Expose init function
     return {
         init: function() {
             UICtrl.setInitialState();
+            StorageCtrl.retrieveState();
             const items = ItemCtrl.getItems();
             // Check if items array is empty
             if (items.length === 0) {
@@ -273,6 +296,6 @@ const AppCtrl = (function() {
             loadEventListeners();
         },
     };
-})(ItemCtrl, UICtrl);
+})();
 
 AppCtrl.init();
