@@ -1,2 +1,2 @@
 # track-my-fat
-A simple calorie counter.
+A simple calorie counter with local storage.
